@@ -1,29 +1,30 @@
 #!/usr/bin/env python3
 """
-Tiny YOLOv11 training script for YOLO-format detection data.
-- Uses Ultralytics API
+RT-DETR training script for YOLO-format detection data.
+- Uses Ultralytics API with RT-DETR (Apache 2.0 licensed - commercial-friendly!)
+- Real-time transformer-based object detection
 - Works on CPU or GPU
 - Trains, validates, and exports a ready-to-use model
 
 Usage:
-  python train_yolo11.py --data dataset.yaml --model yolo11n.pt --epochs 100 --imgsz 640
+  python train.py --data dataset.yaml --model rtdetr-l.pt --epochs 100 --imgsz 640
 """
 
 import argparse
 from pathlib import Path
-from ultralytics import YOLO
+from ultralytics import RTDETR
 
 def parse_args():
-    p = argparse.ArgumentParser(description="Train YOLOv11 on YOLO-format data")
+    p = argparse.ArgumentParser(description="Train RT-DETR on YOLO-format data")
     p.add_argument("--data", type=str, required=True, help="Path to dataset.yaml")
-    p.add_argument("--model", type=str, default="yolo11n.pt",
-                   help="YOLOv11 model checkpoint (e.g., yolo11n.pt, yolo11s.pt, yolo11m.pt...)")
+    p.add_argument("--model", type=str, default="rtdetr-l.pt",
+                   help="RT-DETR model checkpoint (e.g., rtdetr-l.pt, rtdetr-x.pt)")
     p.add_argument("--epochs", type=int, default=100, help="Training epochs")
     p.add_argument("--imgsz", type=int, default=640, help="Image size")
     p.add_argument("--batch", type=int, default=16, help="Batch size (auto if 0)")
     p.add_argument("--device", type=str, default="0", help="Device: 'auto', 'cpu', '0', '0,1'")
     p.add_argument("--project", type=str, default="runs/train", help="Project dir for runs")
-    p.add_argument("--name", type=str, default="yolo11", help="Run name")
+    p.add_argument("--name", type=str, default="rtdetr", help="Run name")
     p.add_argument("--workers", type=int, default=8, help="Dataloader workers")
     p.add_argument("--seed", type=int, default=0, help="Random seed")
     p.add_argument("--resume", action="store_true", help="Resume last training for this run name")
@@ -37,8 +38,8 @@ def main():
     data_yaml = Path(args.data).resolve()
     assert data_yaml.exists(), f"dataset yaml not found: {data_yaml}"
 
-    # Load model (downloaded automatically on first use if not present)
-    model = YOLO(args.model)
+    # Load RT-DETR model (downloaded automatically on first use if not present)
+    model = RTDETR(args.model)
 
     # Train
     results = model.train(

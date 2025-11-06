@@ -173,16 +173,32 @@ def convert_yolo_seg_to_gpkg(
 
 
 if __name__ == "__main__":
-    # Example usage (edit paths as needed)
-    labels_dir = Path("pools2labels")        # your labels folder
-    images_root = Path("images")        # your images folder
-    out_gpkg = Path("pools_seg.gpkg")          # output geopackage
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description='Convert YOLO segmentation polygons to georeferenced GeoPackage'
+    )
+    parser.add_argument('--labels', type=str, required=True,
+                        help='Directory containing YOLO segmentation labels')
+    parser.add_argument('--images', type=str, required=True,
+                        help='Root directory containing images')
+    parser.add_argument('--output', type=str, required=True,
+                        help='Output GeoPackage file path')
+    parser.add_argument('--layer', type=str, default='polygons',
+                        help='Output layer name (default: polygons)')
+    parser.add_argument('--chunk-size', type=int, default=5000,
+                        help='Chunk size for memory-efficient writes (default: 5000)')
+    parser.add_argument('--overwrite', action='store_true',
+                        help='Overwrite output file if it exists')
+
+    args = parser.parse_args()
+
     convert_yolo_seg_to_gpkg(
-        labels_dir=labels_dir,
-        images_root=images_root,
-        out_gpkg=out_gpkg,
-        layer="bigpools",
-        chunk_size=5000,
-        overwrite=True
+        labels_dir=Path(args.labels),
+        images_root=Path(args.images),
+        out_gpkg=Path(args.output),
+        layer=args.layer,
+        chunk_size=args.chunk_size,
+        overwrite=args.overwrite
     )
 

@@ -1,0 +1,36 @@
+# RT-DETR Training and Inference (HuggingFace Implementation)
+# Apache 2.0 Licensed - Commercial-Friendly Stack
+
+# Core ML frameworks
+torch>=2.0.0
+transformers>=4.35.0
+albumentations>=1.3.0
+Pillow>=9.0.0
+
+# Data handling
+numpy>=1.21.0
+pyyaml>=6.0
+
+# Progress tracking
+tqdm>=4.65.0
+
+# Geospatial tools (for output conversion)
+rasterio>=1.3.0
+geopandas>=0.12.0
+shapely>=2.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Evaluation metrics (COCO API)
+pycocotools>=2.0.6
+
+# Auto-segmentation (SAM2)
+opencv-python>=4.8.0  # For mask-to-polygon conversion
+
+# Optional: For better performance
+# accelerate>=0.20.0  # For distributed training
+# timm>=0.9.0  # Additional vision backbones
+
+# Note: NO ultralytics dependency - completely clean licensing stack
