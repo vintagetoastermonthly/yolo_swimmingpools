@@ -1,0 +1,6 @@
+name: yolo
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+prefix: /home/david/miniconda3/envs/yolo
